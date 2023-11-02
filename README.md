@@ -2,7 +2,49 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/nxt_try`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+- Types
+  - any of, all of, none of, not
+  - references by id
+  - definitions
+- Nodes
+  - additional nodes strategy
+  - required nodes strategy
+- Contexts
+  - in validations on any level 
+  - in conditions on any level
+- Conditions
+  - conditional attributes
+  - access values of nodes
+  - logical expressions
+  - merge strategy? 
+  ```ruby
+    {
+      if: { and: [or: [{ equals: '~/path/to/context'}, {'~/path/to/context': 'other'}]] }, 
+      then: { replace: { attributes: { ... }, validate: '' }, merge: { ... }  }, 
+      else: { merge: { } } 
+    }
+  ```
+  - NO nested conditions
+- Validations
+  - should be able to take any amount of args
+  - logical expressions
+    - and, or, not, xor
+  ```ruby
+    {
+      validate: { and: [{ equals: '12345' }, { or: [{equals: 'qw'}, {not: 'ads'}]}],
+      validate: { '~/path/to/context': [{ equals: '12345' }, { size: 5}]},
+      validate: { '>=': 5 },
+      validate: { 'greater': 5 },
+      validate: { 'between': [1, '~path/to/context'] },
+      # maybe better named arguments
+      validate: { 'between': { lower: 1, upper: '~path/to/context' } }
+      # conditionals do not make sense and should be solved on schema level
+      # validate: { if: {}, then: {}, else: {} }
+    }
+  ```
+  - NO conditions in validations as those are on schema level
+- Filters
+- Proper type systems with namespacing
 
 ## Installation
 

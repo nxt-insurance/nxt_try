@@ -4,6 +4,7 @@ PATH
     nxt_try (0.1.0)
       activesupport
       dry-types
+      nxt_registry
 
 GEM
   remote: https://rubygems.org/
@@ -45,6 +46,8 @@ GEM
     method_source (1.0.0)
     minitest (5.20.0)
     mutex_m (0.1.2)
+    nxt_registry (0.3.10)
+      activesupport
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)

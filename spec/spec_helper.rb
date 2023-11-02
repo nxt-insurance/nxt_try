@@ -12,7 +12,9 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 
+require "bundler/setup"
 require 'nxt_try'
+require "pry"
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
