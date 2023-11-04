@@ -6,7 +6,7 @@ RSpec.describe NxtTry::Evaluator do
     let(:schema) do
       {
         type: 'hash',
-        value: { validate: { length: 2 } }
+        validations: { length: 2 }
       }
     end
 

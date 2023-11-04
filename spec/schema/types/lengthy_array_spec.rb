@@ -7,7 +7,7 @@ RSpec.describe NxtTry::Evaluator do
       {
         type: 'array',
         items: { type: 'string!' },
-        value: { validations: { min_length: 5 } }
+        validations: { length: 5 }
       }
     end
 

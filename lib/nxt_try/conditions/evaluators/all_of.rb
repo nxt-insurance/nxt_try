@@ -3,8 +3,6 @@ module NxtTry
     module Evaluators
       class AllOf < Base
         def call
-          apply_conditional_schemas
-
           schemas.each do |sub_schema|
             Conditions::Evaluator.new(
               schema: sub_schema,
@@ -14,6 +12,8 @@ module NxtTry
               config: config
             ).call
           end
+
+          apply_conditional_schemas
         end
 
         private

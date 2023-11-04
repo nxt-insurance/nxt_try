@@ -3,8 +3,6 @@ module NxtTry
     module Evaluators
       class Hash < Base
         def call
-          apply_conditional_schemas
-
           attributes.each do |key, value|
             path = current_path + [key]
 
@@ -15,6 +13,8 @@ module NxtTry
               node_accessor: node_accessor,
               config: config
             ).call
+
+            apply_conditional_schemas
           end
         end
 

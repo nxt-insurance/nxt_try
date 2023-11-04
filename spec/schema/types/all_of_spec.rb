@@ -69,8 +69,8 @@ RSpec.describe NxtTry::Evaluator do
                 type:
                   {
                     all_of: [
-                      { type: 'string', value: { validate: { size: 5 } } },
-                      { type: 'string', value: { validate: { pattern: '\d+' } } },
+                      { type: 'string', validations: { size: 5 } },
+                      { type: 'string', validations: { pattern: '\d+' } },
                     ]
                   }
               },
@@ -78,8 +78,8 @@ RSpec.describe NxtTry::Evaluator do
                 type:
                   {
                     all_of: [
-                      { type: 'integer', value: { validate: { greater: 300 } } },
-                      { type: 'integer', value: { validate: { pattern: '\A3' } } },
+                      { type: 'integer', validations: { greater: 300 } },
+                      { type: 'integer', validations: { pattern: '\A3' } },
                     ]
                   }
               }
