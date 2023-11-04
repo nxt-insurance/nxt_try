@@ -9,7 +9,7 @@ module NxtTry
           @node_accessor = node_accessor
           @config = config
           @children = []
-          @result = Schema::Evaluators::Result.new(current_path)
+          @result = Schema::Evaluators::Result.new(current_path, schema)
         end
 
         attr_reader :schema, :input, :current_path, :node_accessor, :config, :children, :result

@@ -22,31 +22,11 @@ module NxtTry
 
         def apply_conditional_schemas
           if case_statement_complete?
+            evaluate_case_statement
           else
             return unless if_statement_complete?(if_statement)
             apply_if_statement_schemas(if_statement)
           end
-
-
-          # schema_to_apply = conditional_schemas.slice(:merge, :replace)
-          # return unless schema_to_apply.any?
-          #
-          # schema_to_merge = schema_to_apply[:merge]
-          # # TODO: Does this even make sense?
-          # schema_to_replace = schema_to_apply[:replace]
-          #
-          # if schema_to_merge
-          #   schema_to_merge.each do |key, value|
-          #     # TODO: Don't allow to switch the type???
-          #     # next if key.to_s == 'type'
-          #
-          #     if value
-          #       schema[key] = value
-          #     else
-          #       schema.delete(key)
-          #     end
-          #   end
-          # end
         end
 
         def apply_if_statement_schemas(statement)
@@ -58,10 +38,29 @@ module NxtTry
                                   statement.fetch(:else, {})
                                 end
 
-          schema_to_apply = conditional_schemas.slice(:merge, :replace)
-          # TODO: Apply schemas here
+          merge_and_replace_schemas(conditional_schemas)
 
           result
+        end
+
+        def merge_and_replace_schemas(conditional_schemas)
+          schemas_to_apply = conditional_schemas.slice(:merge, :replace)
+          schema_to_merge = schemas_to_apply[:merge]
+
+          schema.deep_merge!(schema_to_merge) if schema_to_merge.present?
+
+          schema_to_replace = schemas_to_apply[:replace]
+
+          if schema_to_replace.present?
+            schema_to_replace.each do |key, value|
+              if value
+                schema[key] = value
+              else
+                # Allow to delete keys --> TODO: Test this
+                schema.delete(key)
+              end
+            end
+          end
         end
 
         def evaluate_if_statement(expression)
@@ -79,20 +78,10 @@ module NxtTry
           end
 
           unless result
-            schema_to_apply = case_statement.fetch(:else, {})
-            # TODO: Apply else schema
+            else_schema = case_statement.fetch(:else, {})
+            merge_and_replace_schemas(else_schema)
           end
         end
-
-        # def conditional_schemas
-        #   return {} unless condition?
-        #
-        #   if evaluate_condition
-        #     condition.fetch(:then)
-        #   else
-        #     condition.fetch(:else, {})
-        #   end
-        # end
 
         def if_statement_complete?(statement)
           statement.key?(:if) && statement.key?(:then)

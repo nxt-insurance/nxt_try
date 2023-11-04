@@ -12,7 +12,7 @@ module NxtTry
 
     def defined_type(schema)
       key = schema.fetch(:type).gsub(IDENTIFIER_PATTERN, '')
-      config.type_definitions.fetch(key.to_sym)
+      config.type_definitions.fetch(key.to_sym).dup # make a copy of the template!
     end
 
     def defined_type?(schema)

@@ -21,7 +21,7 @@ RSpec.describe NxtTry::Evaluator do
     let(:input) do
       {
         country_code: 'fr',
-        country: 'Germany'
+        country: 'France'
       }
     end
 

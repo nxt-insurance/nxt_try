@@ -2,13 +2,14 @@ module NxtTry
   module Schema
     module Evaluators
       class Result
-        def initialize(path)
+        def initialize(path, schema)
           @path = path
+          @schema = schema
           @output = nil
           @errors = {}
         end
 
-        attr_accessor :output, :errors, :path
+        attr_accessor :output, :errors, :path, :schema
 
         def add_error(error, p = path)
           key = if p == []

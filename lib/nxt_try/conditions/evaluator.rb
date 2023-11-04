@@ -31,13 +31,13 @@ module NxtTry
 
         case type
         when 'any_of'
-          #NxtTry::Conditions::AnyOf.new(**options).call
+          NxtTry::Conditions::Evaluators::AnyOf.new(**options).call
         when 'all_of'
-          #NxtTry::Conditions::AllOf.new(**options).call
+          NxtTry::Conditions::Evaluators::AllOf.new(**options).call
         when *NxtTry::Types::HASHES
           NxtTry::Conditions::Evaluators::Hash.new(**options).call
         when *NxtTry::Types::ARRAYS
-          #NxtTry::Conditions::Array.new(**options).call
+          NxtTry::Conditions::Evaluators::Array.new(**options).call
         when *NxtTry::Types::PRIMITIVES
           NxtTry::Conditions::Evaluators::Primitive.new(**options).call
         else

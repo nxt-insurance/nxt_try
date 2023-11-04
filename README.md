@@ -45,6 +45,11 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
   - NO conditions in validations as those are on schema level
 - Filters
 - Proper type systems with namespacing
+- Required nodes, omittable nodes 
+- Should we allow conditions on all nodes or just hashes?
+- Rethink merge and replace strategy
+- Should we evaluate from inside out instead of outside in 
+  - Then types could potentially be changed dynamically?
 
 ## Installation
 
