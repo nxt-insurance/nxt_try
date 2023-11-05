@@ -3,6 +3,7 @@ module NxtTry
     module Evaluators
       class Base
         include TypeDefinitions
+        CONDITIONAL_KEYS = [:if, :then, :else, :case, :when]
 
         def initialize(schema:, input:, current_path: [], node_accessor:, config:)
           @input = input
@@ -21,22 +22,17 @@ module NxtTry
         private
 
         def apply_conditional_schemas
-          if case_statement_complete?
             evaluate_case_statement
-          else
-            return unless if_statement_complete?(if_statement)
-            apply_if_statement_schemas(if_statement)
-          end
         end
 
-        def apply_if_statement_schemas(statement)
-          result = evaluate_if_statement(statement.fetch(:if))
+        def apply_if_statement
+          return unless if_statement
 
-          conditional_schemas = if result
-                                  statement.fetch(:then)
-                                else
-                                  statement.fetch(:else, {})
-                                end
+          conditional_schemas = if statement.evaluate(node_accessor)
+            statement.then_statement
+          else
+            statement.else_statement
+          end
 
           merge_and_replace_schemas(conditional_schemas)
 
@@ -63,42 +59,25 @@ module NxtTry
           end
         end
 
-        def evaluate_if_statement(expression)
-          NxtTry::Conditions::Expressions::Evaluator.new(
-            expression: expression,
-            node_accessor: node_accessor
-          ).call
-        end
-
         def evaluate_case_statement
-          if_statements = case_statement.fetch(:case) # TODO: Make sure this is an array
-          result = if_statements.inject(false) do |acc, statement|
-            raise ArgumentError, "Incomplete if statement in case expression" unless if_statement_complete?(statement)
-            acc || apply_if_statement_schemas(statement)
-          end
+          return unless case_statement
+          then_statement = case_statement.evaluate(node_accessor)
 
-          unless result
-            else_schema = case_statement.fetch(:else, {})
+          if then_statement
+            merge_and_replace_schemas(then_statement)
+          else
+            else_schema = case_statement.else_statement
             merge_and_replace_schemas(else_schema)
           end
         end
 
-        def if_statement_complete?(statement)
-          statement.key?(:if) && statement.key?(:then)
-        end
-
-        def case_statement_complete?
-          case_statement.key?(:case)
-        end
-
         def if_statement
-          # TODO: Make sure to validate condition is complete
-          schema.slice(:if, :then, :else).compact
+          # TODO: Clone schema instead of extracting
+          @if_statement ||= Expressions::IfElseStatement.extract!(schema)
         end
 
         def case_statement
-          # TODO: Make sure to validate condition is complete
-          schema.slice(:case, :else).compact
+          @case_statement ||= Expressions::CaseWhenStatement.extract!(schema)
         end
       end
     end

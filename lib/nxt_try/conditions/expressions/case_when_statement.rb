@@ -2,9 +2,9 @@ module NxtTry
   module Conditions
     module Evaluators
       module Expressions
-        class IfElseStatement
-          KEYS = [:if, :then, :else]
-          # { if: {}, then: {}, else: {} }
+        class CaseWhenStatement
+          KEYS = [:case, :else]
+          # { when: {}, then: {}, else: {} }
           #
           def self.extract!(schema)
             extracted_statement = KEYS.inject({}) do |extract, key|
@@ -22,12 +22,8 @@ module NxtTry
             @statement = statement
           end
 
-          def if_statement
-            statement.fetch(:if)
-          end
-
-          def then_statement
-            statement.fetch(:then)
+          def case_statement
+            statement.fetch(:case, nil)
           end
 
           def else_statement
@@ -35,15 +31,21 @@ module NxtTry
           end
 
           def evaluate(node_accessor)
+            case_statement.inject(false) do |acc, when_statement|
+              then_statement = acc || evaluate_case(when_statement.fetch(:when), node_accessor) && when_statement.fetch(:then)
+              return then_statement if then_statement
+            end
+          end
+
+          def evaluate_case(when_statement, node_accessor)
             NxtTry::Conditions::Expressions::Evaluator.new(
-              expression: if_statement,
+              expression: when_statement,
               node_accessor: node_accessor
             ).call
           end
 
           def valid?
-            # TODO: Raise error
-            if_statement && then_statement
+            case_statement
           end
 
           private

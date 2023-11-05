@@ -18,6 +18,8 @@ require_relative "nxt_try/value_extractor"
 require_relative "nxt_try/evaluator"
 
 require_relative "nxt_try/conditions/expression"
+require_relative "nxt_try/conditions/expressions/case_when_statement"
+require_relative "nxt_try/conditions/expressions/if_else_statement"
 require_relative "nxt_try/conditions/expressions/evaluator"
 require_relative "nxt_try/conditions/expressions/evaluators/registry"
 require_relative "nxt_try/conditions/expressions/evaluators/equality"

@@ -10,8 +10,8 @@ module NxtTry
     attr_reader :schema, :input, :current_path, :node_accessor, :config
 
     def call
-      evaluate_conditions
-      evaluation = evaluate_schema
+      schema_to_eval = evaluate_conditions
+      evaluation = evaluate_schema(schema_to_eval)
       evaluation.result
     end
 
@@ -25,10 +25,10 @@ module NxtTry
       ).call
     end
 
-    def evaluate_schema
+    def evaluate_schema(schema_to_eval)
       Schema::Evaluator.new(
         config: config,
-        schema: schema,
+        schema: schema_to_eval,
         input: input,
         current_path: current_path
       ).call

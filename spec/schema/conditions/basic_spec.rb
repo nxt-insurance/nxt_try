@@ -1,4 +1,14 @@
-RSpec.describe NxtTry::Evaluator do
+RSpec.describe NxtTry::Conditions::Evaluator do
+
+  subject do
+    described_class.new(
+      schema: schema,
+      input: input,
+      config: config
+    ).call
+  end
+
+  let(:config) { NxtTry::Config.new(schema: schema, input: input, options: {}) }
 
   context 'hash root' do
     let(:schema) do
@@ -10,8 +20,8 @@ RSpec.describe NxtTry::Evaluator do
             type: 'string',
             validations: { enum: 'de' },
             case: [
-              { if: { '/country': { equals: 'France' } }, then: { merge: { validations: { enum: 'fr' } } } },
-              { if: { '/country': { equals: 'England' } }, then: { merge: { validations: { enum: 'gb' } } } }
+              { when: { '/country': { equals: 'France' } }, then: { merge: { validations: { enum: 'fr' } } } },
+              { when: { '/country': { equals: 'England' } }, then: { merge: { validations: { enum: 'gb' } } } }
             ]
           }
         }
@@ -26,7 +36,7 @@ RSpec.describe NxtTry::Evaluator do
     end
 
     it 'builds the schema' do
-      result = described_class.new(schema: schema, input: input).call
+      subject
       binding.pry
     end
   end
