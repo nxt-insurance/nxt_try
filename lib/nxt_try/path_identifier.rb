@@ -1,6 +1,6 @@
 module NxtTry
   class PathIdentifier
-    KEYS = %w[/ ~ ./]
+    KEYS = %w[/ ~]
 
     def initialize(string)
       @string = string

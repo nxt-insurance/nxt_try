@@ -32,8 +32,9 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
   ```ruby
     {
       validate: { and: [{ equals: '12345' }, { or: [{equals: 'qw'}, {not: 'ads'}]}],
-      validate: { '~/path/to/context': [{ equals: '12345' }, { size: 5}]},
+      validate: { '~/path/to/context': [{ '/path/to/validation': '12345' }, { size: 5}]},
       validate: { '>=': 5 },
+      validate: { 'api': { } },
       validate: { 'greater': 5 },
       validate: { 'between': [1, '~path/to/context'] },
       # maybe better named arguments
@@ -50,6 +51,8 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 - Rethink merge and replace strategy
 - Should we evaluate from inside out instead of outside in 
   - Then types could potentially be changed dynamically?
+- Do not mutate original schema
+  - Reference original schema 
 
 ## Installation
 

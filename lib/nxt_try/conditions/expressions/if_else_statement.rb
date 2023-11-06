@@ -43,7 +43,7 @@ module NxtTry
 
           def valid?
             # TODO: Raise error
-            if_statement && then_statement
+            statement.key?(:if) && statement.key?(:then)
           end
 
           private

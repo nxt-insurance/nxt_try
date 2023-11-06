@@ -23,7 +23,7 @@ module NxtTry
           end
 
           def case_statement
-            statement.fetch(:case, nil)
+            statement.fetch(:case)
           end
 
           def else_statement
@@ -45,7 +45,7 @@ module NxtTry
           end
 
           def valid?
-            case_statement
+            statement.key?(:case)
           end
 
           private

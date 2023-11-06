@@ -22,17 +22,18 @@ module NxtTry
         private
 
         def apply_conditional_schemas
-            evaluate_case_statement
+          apply_case_statement
+          apply_if_statement
         end
 
         def apply_if_statement
           return unless if_statement
 
-          conditional_schemas = if statement.evaluate(node_accessor)
-            statement.then_statement
-          else
-            statement.else_statement
-          end
+          conditional_schemas = if if_statement.evaluate(node_accessor)
+                                  if_statement.then_statement
+                                else
+                                  if_statement.else_statement
+                                end
 
           merge_and_replace_schemas(conditional_schemas)
 
@@ -59,7 +60,7 @@ module NxtTry
           end
         end
 
-        def evaluate_case_statement
+        def apply_case_statement
           return unless case_statement
           then_statement = case_statement.evaluate(node_accessor)
 

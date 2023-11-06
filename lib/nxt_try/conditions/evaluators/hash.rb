@@ -6,6 +6,7 @@ module NxtTry
           attributes.each do |key, value|
             path = current_path + [key]
 
+            puts "path: #{path}"
             Conditions::Evaluator.new(
               schema: value,
               input: input,

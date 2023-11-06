@@ -7,7 +7,7 @@ module NxtTry
         @input = input
         @current_path = current_path
         @config = config
-        @node_accessor = node_accessor || NodeAccessor.new(schema: schema, input: input, config: config)
+        @node_accessor = NodeAccessor.new(schema: schema, input: input, config: config, current_path: current_path)
         @schema = resolve_defined_type(schema)
         @result = nil
       end
