@@ -3,14 +3,15 @@ module NxtTry
     include TypeDefinitions
     PathNotResolvableError = Class.new(NxtTry::Error)
 
-      def initialize(schema:, input:, config:, current_path:)
+      def initialize(schema:, input:, config:, current_path:, parent_node:)
       @input = input
       @config = config
       @schema = resolve_defined_type(schema)
       @current_path = current_path
+      @parent_node = parent_node
     end
 
-    attr_reader :schema, :input, :config, :current_path
+    attr_reader :schema, :input, :config, :current_path, :parent_node
 
     # TODO: Do some memoization here?
 
@@ -27,7 +28,7 @@ module NxtTry
     end
 
     def schema_for_path(path)
-      resolve_schemas_for_path(schema: schema, current_path: path)
+      resolve_schemas_for_path(schema: root, current_path: path)
     end
 
     def coerce_value_with_schema(path)
@@ -100,9 +101,19 @@ module NxtTry
 
     def parse_path(string)
       # TODO: Currently we only support path from the root!
-      if string[0] != '/' && string[0] != '~'
-        raise NotImplementedError, "Only paths relative to root are supported currently #{string}"
-      end
+
+      path_to_relative_path = if string.start_with?('./')
+                                string = string.gsub(/\A\./, '')
+                                current_path.dup
+                              elsif string.start_with?('../')
+                                parent_pattern = /\.\.\//
+                                matches = string.scan(parent_pattern)
+                                string = string.gsub(parent_pattern, '')
+                                string = string.prepend('/')
+                                current_path[0..-matches.size+1]
+                              else
+                                []
+                              end
 
       parts = string.to_s.split('/').reject(&:blank?).inject([]) do |acc, part|
         # array access: path[0]
@@ -114,7 +125,7 @@ module NxtTry
         end
       end
 
-      parts.map(&:to_sym)
+      (path_to_relative_path + parts).map(&:to_sym)
     end
 
     def resolve_type_expression(type)
@@ -123,6 +134,20 @@ module NxtTry
       else
         type
       end
+    end
+
+    def root
+      @root ||= begin
+                  gateway = self
+                  root = schema
+
+                  while gateway&.parent_node do
+                    root = gateway.parent_node.schema
+                    gateway = gateway.parent_node
+                  end
+
+                  root
+                end
     end
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe NxtTry::Evaluator do
         attributes: {
           phone_number: {
             type: {
-              and: [
+              all_of: [
                 { type: 'string', validations: { size: 5 } },
                 { type: 'string', validations: { pattern: '\d+' } }
               ]

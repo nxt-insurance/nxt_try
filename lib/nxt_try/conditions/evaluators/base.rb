@@ -5,15 +5,16 @@ module NxtTry
         include TypeDefinitions
         CONDITIONAL_KEYS = [:if, :then, :else, :case, :when]
 
-        def initialize(schema:, input:, current_path: [], node_accessor:, config:)
+        def initialize(schema:, input:, current_path: [], node_accessor:, config:, parent_node:)
           @input = input
           @current_path = current_path
           @node_accessor = node_accessor
           @config = config
           @schema = resolve_defined_type(schema)
+          @parent_node = parent_node
         end
 
-        attr_reader :schema, :input, :current_path, :node_accessor, :config
+        attr_reader :schema, :input, :current_path, :node_accessor, :config, :parent_node
 
         def call
           raise NotImplementedError
@@ -36,8 +37,6 @@ module NxtTry
                                 end
 
           merge_and_replace_schemas(conditional_schemas)
-
-          result
         end
 
         def merge_and_replace_schemas(conditional_schemas)
@@ -58,6 +57,8 @@ module NxtTry
               end
             end
           end
+
+          schema
         end
 
         def apply_case_statement

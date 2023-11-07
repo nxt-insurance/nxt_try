@@ -8,7 +8,8 @@ module NxtTry
             input: input,
             current_path: current_path,
             node_accessor: node_accessor,
-            config: config
+            config: config,
+            parent_node: self
           ).call
 
           apply_conditional_schemas

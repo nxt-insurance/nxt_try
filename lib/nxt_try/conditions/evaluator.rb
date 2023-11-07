@@ -3,15 +3,22 @@ module NxtTry
     class Evaluator
       include TypeDefinitions
 
-      def initialize(schema:, input:, current_path: [], node_accessor: nil, config:)
+      def initialize(schema:, input:, current_path: [], node_accessor: nil, config:, parent_node: nil)
         @input = input
         @current_path = current_path
         @config = config
-        @node_accessor = NodeAccessor.new(schema: schema, input: input, config: config, current_path: current_path)
+        @node_accessor = NodeAccessor.new(
+          schema: schema,
+          input: input,
+          config: config,
+          current_path: current_path,
+          parent_node: parent_node
+        )
         @schema = resolve_defined_type(schema)
+        @parent_node = parent_node
       end
 
-      attr_reader :schema, :input, :current_path, :node_accessor, :config
+      attr_reader :schema, :input, :current_path, :node_accessor, :config, :parent_node
 
       def call
         evaluate_conditions
@@ -23,7 +30,8 @@ module NxtTry
           input: input,
           current_path: current_path,
           node_accessor: node_accessor,
-          config: config
+          config: config,
+          parent_node: parent_node
         }
 
         type = schema.fetch(:type)

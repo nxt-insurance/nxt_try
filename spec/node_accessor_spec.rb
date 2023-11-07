@@ -20,8 +20,8 @@ RSpec.describe NxtTry::Evaluator do
                 name: { type: 'string' },
                 number: { type: 'string' },
               },
-              if: { '/name': { equals: 'Goethe Street' } },
-              then: { merge: { attributes: { number: { type: 'integer' } } } }
+              if: { '../street/name': { equals: 'Goethe Street' } },
+              then: { merge: { attributes: { number: { type: 'integer', validations: { equals: 2 } } } } }
             },
             zip_code: { type: 'string' },
             city: { type: 'string' }
@@ -41,7 +41,7 @@ RSpec.describe NxtTry::Evaluator do
       address: {
         street: {
           name: 'Goethe Street',
-          number: '1'
+          number: 1
         },
         zip_code: '77855',
         city: 'Berlin'

@@ -6,17 +6,17 @@ module NxtTry
           attributes.each do |key, value|
             path = current_path + [key]
 
-            puts "path: #{path}"
             Conditions::Evaluator.new(
-              schema: value,
+              schema: value.dup,
               input: input,
               current_path: path,
               node_accessor: node_accessor,
-              config: config
+              config: config,
+              parent_node: self
             ).call
-
-            apply_conditional_schemas
           end
+
+          apply_conditional_schemas
         end
 
         private

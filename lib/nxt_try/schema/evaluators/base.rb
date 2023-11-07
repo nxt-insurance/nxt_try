@@ -2,7 +2,7 @@ module NxtTry
   module Schema
     module Evaluators
       class Base
-        def initialize(schema:, input:, current_path:, node_accessor:, config:)
+        def initialize(schema:, input:, current_path:, node_accessor:, config:, parent_node:)
           @schema = schema
           @input = input
           @current_path = current_path
@@ -10,9 +10,10 @@ module NxtTry
           @config = config
           @children = []
           @result = Schema::Evaluators::Result.new(current_path, schema)
+          @parent_node = parent_node
         end
 
-        attr_reader :schema, :input, :current_path, :node_accessor, :config, :children, :result
+        attr_reader :schema, :input, :current_path, :node_accessor, :config, :children, :result, :parent_node
 
         def call
           raise NotImplementedError

@@ -26,7 +26,8 @@ module NxtTry
                   input: input,
                   current_path: path,
                   node_accessor: node_accessor,
-                  config: config
+                  config: config,
+                  parent_node: self
                 ).call
 
                 children << evaluator
@@ -145,13 +146,6 @@ module NxtTry
 
         def attributes
           schema.fetch(:attributes, Undefined.new)
-        end
-
-        def evaluate_expression(expression)
-          # NxtTry::Evaluators::Conditions::Expressions::Evaluator.new(
-          #   expression: expression,
-          #   node_accessor: node_accessor
-          # ).call
         end
       end
     end
