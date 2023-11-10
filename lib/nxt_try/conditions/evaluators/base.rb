@@ -5,10 +5,9 @@ module NxtTry
         include TypeDefinitions
         CONDITIONAL_KEYS = [:if, :then, :else, :case, :when]
 
-        def initialize(schema:, input:, current_path: [], node_accessor:, config:, parent_node:)
+        def initialize(schema:, input:, current_path: [], config:, parent_node:)
           @input = input
           @current_path = current_path
-          @node_accessor = node_accessor
           @config = config
           @schema = resolve_defined_type(schema)
           @parent_node = parent_node
@@ -21,6 +20,17 @@ module NxtTry
         end
 
         private
+
+        def node_accessor
+          @node_accessor ||= NodeAccessor.new(
+            schema: schema,
+            input: input,
+            config: config,
+            current_path: current_path,
+            parent_node: parent_node,
+            node: self
+          )
+        end
 
         def apply_conditional_schemas
           apply_case_statement

@@ -3,15 +3,16 @@ module NxtTry
     include TypeDefinitions
     PathNotResolvableError = Class.new(NxtTry::Error)
 
-      def initialize(schema:, input:, config:, current_path:, parent_node:)
+      def initialize(schema:, input:, config:, current_path:, parent_node:, node:)
       @input = input
       @config = config
       @schema = resolve_defined_type(schema)
       @current_path = current_path
       @parent_node = parent_node
+      @node = node
     end
 
-    attr_reader :schema, :input, :config, :current_path, :parent_node
+    attr_reader :schema, :input, :config, :current_path, :parent_node, :node
 
     # TODO: Do some memoization here?
 

@@ -8,7 +8,6 @@ module NxtTry
               schema: sub_schema,
               input: input,
               current_path: current_path,
-              node_accessor: node_accessor,
               config: config,
               parent_node: self
             ).call

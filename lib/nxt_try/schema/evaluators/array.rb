@@ -12,7 +12,6 @@ module NxtTry
                 schema: items_schema,
                 input: input,
                 current_path: path,
-                node_accessor: node_accessor,
                 config: config,
                 parent_node: self
               ).call

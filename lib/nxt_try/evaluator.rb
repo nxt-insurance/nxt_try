@@ -20,7 +20,6 @@ module NxtTry
         schema: schema,
         input: input,
         current_path: current_path,
-        node_accessor: nil,
         config: config
       ).call
     end
