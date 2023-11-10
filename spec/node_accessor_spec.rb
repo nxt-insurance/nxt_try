@@ -52,7 +52,7 @@ RSpec.describe NxtTry::Evaluator do
   subject { described_class.new(schema: schema, input: input).call }
 
   it do
-    subject
-    binding.pry
+    expect(subject).to_not be_valid
+    expect(subject.errors).to include('address' => ['Value: 1 is not equal: 2'])
   end
 end

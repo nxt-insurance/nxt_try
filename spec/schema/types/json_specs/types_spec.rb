@@ -1,10 +1,8 @@
 RSpec.describe 'types' do
 
-  let(:directories) { Dir["#{__dir__}/*/"] }
+  let(:directories) { Dir["#{__dir__}/**/"] }
 
-  let(:folders) do
-    directories.select { |dir| Pathname.new(dir).children.all?(&:file?) }
-  end
+  let(:folders) { directories.select { |dir| Pathname.new(dir).children.all?(&:file?) } }
 
   let(:examples) do
     folders.inject([]) do |acc, folder|
@@ -17,13 +15,15 @@ RSpec.describe 'types' do
   end
 
   it do
-    examples.each do |example|
+    examples.each_with_index do |example, index|
       schema = File.read(example.fetch('schema'))
       input = File.read(example.fetch('input'))
       expectation = File.read(example.fetch('expect'))
 
+      puts "testing example #{index}"
+
       result = NxtTry::Evaluator.new(schema: schema, input: input).call
-      expect(result.output).to eq(JSON.parse(expectation, symbolize_names: true))
+      expect(result.to_h).to eq(JSON.parse(expectation, symbolize_names: true))
     end
   end
 end

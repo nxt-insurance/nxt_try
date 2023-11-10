@@ -3,11 +3,11 @@
     "products": [
       {
         "name": "beer",
-        "price": 2
+        "price": []
       },
       {
         "name": "salad",
-        "price": 4
+        "price": "not an integer"
       },
       {
         "name": "pizza",
@@ -23,7 +23,7 @@
       },
       {
         "name": "vase",
-        "price": 4
+        "price": { }
       },
       {
         "name": "perfume",

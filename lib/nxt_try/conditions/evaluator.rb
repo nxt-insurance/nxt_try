@@ -43,8 +43,6 @@ module NxtTry
         else
           raise NotImplementedError, "Don't know how to parse type #{type}"
         end
-
-        schema
       end
 
       def resolve_type_expression(type)

@@ -1,0 +1,37 @@
+{
+  "errors": {},
+  "output": [
+    {
+      "products": [
+        {
+          "name": "beer",
+          "price": 2
+        },
+        {
+          "name": "salad",
+          "price": 4
+        },
+        {
+          "name": "pizza",
+          "price": 5
+        }
+      ]
+    },
+    {
+      "products": [
+        {
+          "name": "soap",
+          "price": 2
+        },
+        {
+          "name": "vase",
+          "price": 4
+        },
+        {
+          "name": "perfume",
+          "price": 5
+        }
+      ]
+    }
+  ]
+}

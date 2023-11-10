@@ -7,7 +7,7 @@ module NxtTry
             path = current_path + [key]
 
             Conditions::Evaluator.new(
-              schema: value.dup,
+              schema: value,
               input: input,
               current_path: path,
               config: config,

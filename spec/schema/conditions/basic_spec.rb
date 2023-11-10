@@ -37,7 +37,6 @@ RSpec.describe NxtTry::Conditions::Evaluator do
 
     it 'builds the schema' do
       subject
-      binding.pry
     end
   end
 end

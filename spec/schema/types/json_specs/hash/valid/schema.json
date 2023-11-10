@@ -1,0 +1,15 @@
+{
+  "type": "hash",
+  "attributes": {
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "hash",
+        "attributes": {
+          "name": { "type": "string" },
+          "price": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

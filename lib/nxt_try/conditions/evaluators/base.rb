@@ -31,7 +31,7 @@ module NxtTry
         end
 
         def apply_if_statement
-          return unless if_statement
+          return schema unless if_statement
 
           conditional_schemas = if if_statement.evaluate(node_accessor)
                                   if_statement.then_statement
@@ -65,7 +65,8 @@ module NxtTry
         end
 
         def apply_case_statement
-          return unless case_statement
+          return schema unless case_statement
+
           then_statement = case_statement.evaluate(node_accessor)
 
           if then_statement

@@ -33,6 +33,9 @@ RSpec.describe NxtTry::Evaluator do
 
     it 'builds the schema' do
       result = described_class.new(schema: schema, input: input).call
+
+      expect(result).to be_valid
+      expect(result.output).to eq(input)
     end
   end
 
