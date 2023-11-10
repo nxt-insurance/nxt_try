@@ -56,4 +56,9 @@ require_relative "nxt_try/schema/validators/string/equals"
 require_relative "nxt_try/schema/validators/string/enum"
 require_relative "nxt_try/schema/validators/string/pattern"
 
+require_relative "nxt_try/schema/validators/integer/equals"
+require_relative "nxt_try/schema/validators/integer/greater"
+require_relative "nxt_try/schema/validators/integer/pattern"
+
 require_relative "nxt_try/schema/validators/array/length"
+require_relative "nxt_try/schema/validators/hash/length"
