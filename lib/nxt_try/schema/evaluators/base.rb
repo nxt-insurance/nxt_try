@@ -33,15 +33,7 @@ module NxtTry
         attr_writer :children
 
         def node_accessor
-          @node_accessor ||= NodeAccessor.new(
-            schema: schema,
-            input: input,
-            config: config,
-            current_path: current_path,
-            parent_node: parent_node,
-            node: self
-          )
-
+          @node_accessor ||= NodeAccessor.new(self)
         end
 
         def coerce_input

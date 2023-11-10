@@ -13,7 +13,7 @@ module NxtTry
           @parent_node = parent_node
         end
 
-        attr_reader :schema, :input, :current_path, :node_accessor, :config, :parent_node
+        attr_reader :schema, :input, :current_path, :config, :parent_node
 
         def call
           raise NotImplementedError
@@ -22,14 +22,7 @@ module NxtTry
         private
 
         def node_accessor
-          @node_accessor ||= NodeAccessor.new(
-            schema: schema,
-            input: input,
-            config: config,
-            current_path: current_path,
-            parent_node: parent_node,
-            node: self
-          )
+          @node_accessor ||= NodeAccessor.new(self)
         end
 
         def apply_conditional_schemas

@@ -3,16 +3,13 @@ module NxtTry
     include TypeDefinitions
     PathNotResolvableError = Class.new(NxtTry::Error)
 
-      def initialize(schema:, input:, config:, current_path:, parent_node:, node:)
-      @input = input
-      @config = config
-      @schema = resolve_defined_type(schema)
-      @current_path = current_path
-      @parent_node = parent_node
+    def initialize(node)
       @node = node
     end
 
-    attr_reader :schema, :input, :config, :current_path, :parent_node, :node
+    attr_reader :node
+
+    delegate :current_path, :schema, :parent_node, :input, :config, to: :node
 
     # TODO: Do some memoization here?
 
@@ -29,17 +26,17 @@ module NxtTry
     end
 
     def schema_for_path(path)
-      resolve_schemas_for_path(schema: root, current_path: path)
+      resolve_schemas_for_path(schema: root_node.schema, current_path: path)
     end
 
     def coerce_value_with_schema(path)
       schema_or_schemas = schema_for_path(path)
 
       schemas = if schema_or_schemas.is_a?(Array)
-        schema_or_schemas
-      else
-        [schema_or_schemas]
-      end
+                  schema_or_schemas
+                else
+                  [schema_or_schemas]
+                end
 
       value = extract_value(input, path)
 
@@ -101,18 +98,20 @@ module NxtTry
     end
 
     def parse_path(string)
-      # TODO: Currently we only support path from the root!
 
       path_to_relative_path = if string.start_with?('./')
+                                # relative from here
                                 string = string.gsub(/\A\./, '')
                                 current_path.dup
                               elsif string.start_with?('../')
+                                # moving up
                                 parent_pattern = /\.\.\//
                                 matches = string.scan(parent_pattern)
                                 string = string.gsub(parent_pattern, '')
                                 string = string.prepend('/')
                                 current_path[0..-matches.size+1]
                               else
+                                # absolute paths
                                 []
                               end
 
@@ -137,18 +136,17 @@ module NxtTry
       end
     end
 
-    def root
-      @root ||= begin
-                  gateway = self
-                  root = schema
+    def root_node
+      # TODO: Does not need to be a while loop since we probably know the depth
+      @root_node ||= begin
+                       current_node = node
 
-                  while gateway&.parent_node do
-                    root = gateway.parent_node.schema
-                    gateway = gateway.parent_node
-                  end
+                       while current_node&.parent_node do
+                         current_node = current_node.parent_node
+                       end
 
-                  root
-                end
+                       current_node
+                     end
     end
   end
 end
