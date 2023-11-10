@@ -23,7 +23,7 @@ RSpec.describe 'types' do
       expectation = File.read(example.fetch('expect'))
 
       result = NxtTry::Evaluator.new(schema: schema, input: input).call
-      expect(result.output).to eq(JSON(expectation).deep_symbolize_keys)
+      expect(result.output).to eq(JSON.parse(expectation, symbolize_names: true))
     end
   end
 end
