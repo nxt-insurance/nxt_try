@@ -11,8 +11,12 @@ module NxtTry
           def call
             return if allowed.include?(value)
 
-            # TODO: This should be proper errors that allow for interpolation
-            "Value: #{value} does not match enum: #{allowed}"
+            {
+              value: value,
+              validator: self.class.name.demodulize.downcase,
+              reference: allowed,
+              message: "Value #{value} not included in: #{allowed}"
+            }
           end
 
           private

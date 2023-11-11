@@ -38,6 +38,7 @@ module NxtTry
             end
 
             if missing_key_errors.any?
+              # TODO: should be a hash
               add_error("is missing keys: #{missing_key_errors}")
             end
 

@@ -11,8 +11,12 @@ module NxtTry
           def call
             return if value.to_s.match(pattern)
 
-            # TODO: This should be proper errors that allow for interpolation
-            "Value: #{value} does not match pattern: #{pattern}"
+            {
+              value: value,
+              reference: pattern,
+              validator: self.class.name.demodulize.downcase,
+              message: "Value #{value} does not match #{pattern}"
+            }
           end
 
           private

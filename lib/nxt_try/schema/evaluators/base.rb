@@ -39,7 +39,26 @@ module NxtTry
         def coerce_input
           coercer.call(current_input)
         rescue => e
-          add_error(e)
+          if e.is_a?(Dry::Types::CoercionError)
+            add_error(
+              {
+                value: current_input,
+                reference: type,
+                validator: 'type',
+                message: "Could not coerce value into a #{type}"
+              }
+            )
+          else
+            add_error(
+              {
+                value: current_input,
+                reference: type,
+                validator: 'type',
+                message: e.message
+              }
+            )
+          end
+
           current_input
         end
 

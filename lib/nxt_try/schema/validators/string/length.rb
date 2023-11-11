@@ -10,11 +10,20 @@ module NxtTry
 
           def call
             if !value.respond_to?(:length)
-              "Can't resolve length of #{value}"
+              {
+                value: value,
+                reference: length,
+                validator: self.class.name.demodulize.downcase,
+                message: "Can't determine length of #{value}"
+              }
             else
               if value.length != length
-                # TODO: This should be proper errors that allow for interpolation
-                "Length of #{value} does not match #{length}"
+                {
+                  value: value,
+                  validator: self.class.name.demodulize.downcase,
+                  reference: length,
+                  message: "Value #{value} is not of length #{length}"
+                }
               end
             end
           end

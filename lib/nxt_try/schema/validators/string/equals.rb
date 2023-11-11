@@ -11,8 +11,12 @@ module NxtTry
           def call
             return if allowed == value
 
-            # TODO: This should be proper errors that allow for interpolation
-            "Value: #{value} is not equal: #{allowed}"
+            {
+              value: value,
+              validator: self.class.name.demodulize.downcase,
+              reference: allowed,
+              message: "Value #{value} does not equal #{allowed}"
+            }
           end
 
           private

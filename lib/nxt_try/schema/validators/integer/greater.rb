@@ -10,10 +10,14 @@ module NxtTry
 
           def call
             return if value > allowed
-            rescue
+          rescue
 
-            # TODO: This should be proper errors that allow for interpolation
-            "Value: #{value} is not greater: #{allowed}"
+            {
+              value: value,
+              reference: allowed,
+              validator: self.class.name.demodulize.downcase,
+              message: "Value #{value} is not greater #{allowed}"
+            }
           end
 
           private
