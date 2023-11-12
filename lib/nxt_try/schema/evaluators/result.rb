@@ -16,11 +16,10 @@ module NxtTry
             'root'
           else
             p.join('.')
-                end
+          end
 
           errors[key] ||= []
-          # Wrap in array when it's a hash
-          error = [error] if error.respond_to?(:keys)
+          error = [error] if error.is_a?(::Hash)
           errors[key] += error
         end
 

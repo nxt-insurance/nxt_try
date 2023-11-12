@@ -93,8 +93,12 @@ module NxtTry
               current_node[key] = current_input[key]
             end
 
-            # TODO: Make proper error
-            add_error("contains additional keys: #{additional_keys}")
+            add_error(
+              value: input,
+              reference: allowed_keys,
+              message: "#{input} contains additional keys #{additional_keys}",
+              validator: 'keys'
+            )
           else
             raise ArgumentError, "Unknown strategy #{additional_keys_strategy}"
           end
@@ -121,23 +125,29 @@ module NxtTry
         end
 
         def additional_keys
-          @additional_keys ||= current_input.keys - filtered_attributes.keys
+          @additional_keys ||= current_input.keys - allowed_keys
+        end
+
+        def allowed_keys
+          @allowed_keys ||= filtered_attributes.keys
         end
 
         def filtered_attributes
-          filters = config.filters
-          return attributes unless filters.any?
+          @filtered_attributes||= begin
+                                    filters = config.filters
+                                    return attributes unless filters.any?
 
-          attributes.inject({}) do |acc, (key,sub_schema)|
-            current_filters = Array(sub_schema.fetch(:filters, []))
+                                    attributes.inject({}) do |acc, (key,sub_schema)|
+                                      current_filters = Array(sub_schema.fetch(:filters, []))
 
-            if (current_filters & filters).any?
-              acc[key] = sub_schema
-              acc
-            else
-              acc
-            end
-          end
+                                      if (current_filters & filters).any?
+                                        acc[key] = sub_schema
+                                        acc
+                                      else
+                                        acc
+                                      end
+                                    end
+                                  end
         end
 
         def attributes_schema_provided?
