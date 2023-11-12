@@ -10,6 +10,7 @@ module NxtTry
 
         @schema = resolve_defined_type(schema)
         @result = nil
+        @parent_node = parent_node
       end
 
       attr_reader :schema, :input, :current_path, :config, :parent_node

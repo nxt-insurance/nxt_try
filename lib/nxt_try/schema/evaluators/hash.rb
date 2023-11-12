@@ -7,7 +7,6 @@ module NxtTry
         def call
           # TODO: Allow hashes without attributes
           # Make sure we are dealing with a hash first
-
           if valid_input? && attributes_schema_provided?
             result.output = {}
             handle_additional_keys(result.output)
@@ -38,8 +37,12 @@ module NxtTry
             end
 
             if missing_key_errors.any?
-              # TODO: should be a hash
-              add_error("is missing keys: #{missing_key_errors}")
+              add_error(
+                value: input,
+                reference: allowed_keys, # TODO: Not sure if reference is ideal
+                message: "#{node_name} is missing keys #{missing_key_errors}",
+                validator: 'keys'
+              )
             end
 
             run_validations
@@ -69,7 +72,7 @@ module NxtTry
           @required_node ||= begin
                                required = sub_schema.fetch(:required, true)
 
-                               if required.is_a?(Hash)
+                               if required.is_a?(::Hash)
                                  # TODO: Here we also want to allow expressions?
                                  evaluate_expression(required)
                                else
@@ -96,7 +99,7 @@ module NxtTry
             add_error(
               value: input,
               reference: allowed_keys,
-              message: "#{input} contains additional keys #{additional_keys}",
+              message: "#{node_name} contains additional keys #{additional_keys}",
               validator: 'keys'
             )
           else
@@ -156,6 +159,15 @@ module NxtTry
 
         def attributes
           schema.fetch(:attributes, Undefined.new)
+        end
+
+        def evaluate_expression(expression)
+          Required::Evaluator.new(
+            expression: expression,
+            input: input,
+            node_accessor: node_accessor,
+            config: config
+          ).call
         end
       end
     end

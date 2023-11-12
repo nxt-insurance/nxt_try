@@ -33,6 +33,13 @@ module NxtTry
         def valid?
           errors.empty?
         end
+
+        def error_messages
+          @error_messages ||= errors.inject({}) { |acc, (k,v)|
+            acc[k] = v.map { |e| e.fetch(:message) }
+            acc
+          }
+        end
       end
     end
   end

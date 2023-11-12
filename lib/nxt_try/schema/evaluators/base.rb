@@ -111,6 +111,10 @@ module NxtTry
         def validations
           @validations ||= schema.dig(:validations)
         end
+
+        def node_name
+          current_path.any? ? current_path.join('.') : 'root'
+        end
       end
     end
   end

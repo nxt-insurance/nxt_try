@@ -53,6 +53,6 @@ RSpec.describe NxtTry::Evaluator do
 
   it do
     expect(subject).to_not be_valid
-    expect(subject.errors).to include('address' => ['Value: 1 is not equal: 2'])
+    expect(subject.errors).to eq({"address"=>[{:value=>1, :reference=>2, :validator=>"equals", :message=>"Value 1 does not equal 2"}]})
   end
 end

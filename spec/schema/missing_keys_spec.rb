@@ -11,15 +11,10 @@ RSpec.describe NxtTry::Evaluator do
               street_number: { type: 'string' },
               city: {
                 type: 'string',
-                # '-> /address/street': { traceable: false } => required when /address/street absent
-                required: { '/address/street': { traceable: false } }
+                required: { '/address/street': { traceable: true } } # when street is present we require city to be present
               },
               zip_code: { type: 'string' }
             }
-          },
-          zip_code: {
-            type: 'string',
-            validations: { pattern: '\d{5}' }
           }
         }
       },
@@ -47,7 +42,12 @@ RSpec.describe NxtTry::Evaluator do
 
     it do
       expect(subject).to_not be_valid
-      expect(subject.errors).to eq("address"=>["is missing keys: [:zip_code]"], "root"=>["is missing keys: [:country]"])
+      expect(subject.errors).to eq(
+        {
+          "address"=>[{:value=>{:address=>{:street=>"Kirchgasse", :street_number=>"1"}}, :reference=>[:street, :street_number, :city, :zip_code], :message=>"address is missing keys [:city, :zip_code]", :validator=>"keys"}],
+          "root"=>[{:value=>{:address=>{:street=>"Kirchgasse", :street_number=>"1"}}, :reference=>[:address, :country], :message=>"root is missing keys [:country]", :validator=>"keys"}]
+        }
+      )
     end
   end
 end
