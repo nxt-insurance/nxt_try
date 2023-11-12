@@ -6,13 +6,12 @@ module NxtTry
           @raw = raw
 
           @left = raw.keys.first
-          @operation = raw[left].keys.first
-          @right = raw.values.first.values.first
+          @right = raw.values.first
 
           @type = parse_type
         end
 
-        attr_reader :type, :left, :right, :type, :raw, :operation
+        attr_reader :type, :left, :right, :type, :raw
 
         def evaluator
           return logic_evaluator if logic?
@@ -45,7 +44,7 @@ module NxtTry
         end
 
         def required_evaluator
-          @required_evaluator ||= NxtTry::Schema::Required::Evaluators::Registry.resolve(operation)
+          @required_evaluator ||= NxtTry::Schema::Required::Evaluators::Registry.resolve(right.keys.first)
         end
       end
     end

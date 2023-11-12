@@ -23,7 +23,7 @@ module NxtTry
             ).call
           elsif expression.required?
             left = evaluate_path_or_value(expression.left)
-            right = evaluate_path_or_value(expression.right)
+            right = evaluate_path_or_value(expression.right.values.first)
 
             expression.evaluator.new(left, right).call
           else

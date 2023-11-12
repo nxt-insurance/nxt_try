@@ -3,14 +3,13 @@ module NxtTry
     module Required
       module Logic
         class Base
-          def initialize(expression:, node_type:, input:, node_accessor:, errors:, config:)
+          def initialize(expression:, input:, node_accessor:, config:)
             @expression = expression
             @left = expression.keys.first
             @right = expression.values.first
             @node_accessor = node_accessor
-            @node_type = node_type
             @input = input
-            @errors = errors
+            @config = config
           end
 
           def call
@@ -19,7 +18,7 @@ module NxtTry
 
           private
 
-          attr_reader :expression, :left, :right, :node_accessor, :node_type, :input, :errors, :config
+          attr_reader :expression, :left, :right, :node_accessor, :input, :config
         end
       end
     end

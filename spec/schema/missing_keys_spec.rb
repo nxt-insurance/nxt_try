@@ -11,7 +11,12 @@ RSpec.describe NxtTry::Evaluator do
               street_number: { type: 'string' },
               city: {
                 type: 'string',
-                required: { '/address/street': { traceable: true } } # when street is present we require city to be present
+                required: {
+                  and: [
+                    { '/address/street': { traceable: true } },
+                    { '/address/street_number': { traceable: true } }
+                  ]
+                } # when street is present we require city to be present
               },
               zip_code: { type: 'string' }
             }
