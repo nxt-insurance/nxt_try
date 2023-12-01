@@ -20,7 +20,7 @@ RSpec.describe NxtTry::Conditions::Evaluator do
             type: 'string',
             validations: { enum: 'de' },
             case: [
-              { when: { '/country': { equals: 'France' } }, then: { merge: { validations: { enum: 'fr' } } } },
+              { when: { '../country': { equals: 'France' } }, then: { merge: { validations: { enum: 'fr' } } } },
               { when: { '/country': { equals: 'England' } }, then: { merge: { validations: { enum: 'gb' } } } }
             ]
           }

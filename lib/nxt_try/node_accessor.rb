@@ -22,6 +22,8 @@ module NxtTry
         coerce_value_with_schema(path)
       end
     rescue PathNotResolvableError => e
+      # We have to rescue in case we cannot resolve a path because it might not exist
+      # TODO: Can we add a hint that we could not resolve a path?
       UnresolvablePath.new(e)
     end
 

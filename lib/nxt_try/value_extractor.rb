@@ -28,11 +28,11 @@ module NxtTry
         when ::Hash
           acc.fetch(location)
         else
-          raise NodeAccessor::PathNotResolvableError, "Could not resolve path: #{path} in: #{input}"
+          raise NodeAccessor::PathNotResolvableError, "Could not resolve path: #{path} in: #{data}"
         end
       end
     rescue KeyError
-      raise NodeAccessor::PathNotResolvableError, "Could not resolve path: #{path} in: #{input}"
+      raise NodeAccessor::PathNotResolvableError, "Could not resolve path: #{path} in: #{data}"
     end
   end
 end
