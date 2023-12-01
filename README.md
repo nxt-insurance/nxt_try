@@ -48,9 +48,8 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
 - Proper type systems with namespacing
 - Required nodes, omittable nodes 
 - Should we allow conditions on all nodes or just hashes?
+  - Why not all nodes?  
 - Rethink merge and replace strategy
-- Should we evaluate from inside out instead of outside in 
-  - Then types could potentially be changed dynamically?
 - Do not mutate original schema
   - Reference original schema 
 

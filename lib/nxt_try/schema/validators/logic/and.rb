@@ -6,7 +6,7 @@ module NxtTry
           def call
             # left | and: [{ expr }, { expr }] | right
             right.inject(true) do |acc, expr|
-              acc && Validators.new(
+              acc && Validator.new(
                 expression: expr,
                 node_accessor: node_accessor,
                 node_type: node_type,
