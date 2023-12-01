@@ -1,5 +1,7 @@
 RSpec.describe NxtTry::Evaluator do
 
+  subject { described_class.new(schema: schema, input: input).call }
+
   context 'hash root' do
     let(:schema) do
       {
@@ -32,10 +34,8 @@ RSpec.describe NxtTry::Evaluator do
     end
 
     it 'builds the schema' do
-      result = described_class.new(schema: schema, input: input).call
-
-      expect(result).to be_valid
-      expect(result.output).to eq(input)
+      expect(subject).to be_valid
+      expect(subject.output).to eq(input)
     end
   end
 
@@ -62,8 +62,7 @@ RSpec.describe NxtTry::Evaluator do
     end
 
     it 'builds the schema' do
-      result = described_class.new(schema: schema, input: input).call
-      expect(result.to_h).to match(
+      expect(subject.to_h).to match(
                                {:errors=>
                                   {"0"=> be_a(Array)},
                                     :output=>
@@ -71,6 +70,28 @@ RSpec.describe NxtTry::Evaluator do
                                        {:first_name=>"Andy", :last_name=>"Superstar"},
                                        {:first_name=>"Andy", :last_name=>"Candy"}]}
                              )
+    end
+  end
+
+  context 'primitive root' do
+    let(:schema) do
+      { type: 'string' }
+    end
+
+    context 'when valid' do
+      let(:input) { '"this is my input"' }
+
+      it do
+        expect(subject).to be_valid
+      end
+    end
+
+    context 'when invalid' do
+      let(:input) { '12' }
+
+      it do
+        expect(subject).not_to be_valid
+      end
     end
   end
 end
