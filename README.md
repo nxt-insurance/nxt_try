@@ -17,6 +17,7 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
   - access values of nodes
   - logical expressions
   - merge strategy? 
+  - does it make sense to remove conditions once evaluated?
   ```ruby
     {
       if: { and: [or: [{ equals: '~/path/to/context'}, {'~/path/to/context': 'other'}]] }, 
