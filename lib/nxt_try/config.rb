@@ -43,7 +43,7 @@ module NxtTry
     def default_options
       {
         validate: true,
-        additional_keys_strategy: 'reject', # reject, allow, restrict
+        additional_keys_strategy: 'reject', # reject, allow, restrict # TODO: Would ne nice to be able to set this per node
         filters: [],
         key_transformer: 'underscore' # TODO: underscore, camel_case, snake_case
       }

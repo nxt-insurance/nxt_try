@@ -11,7 +11,7 @@ module NxtTry
           def call
             # TODO: Make sure presence expectation is boolean value
             if presence_expectation
-              !value.is_a?(UnresolvablePath)
+              value && !value.is_a?(UnresolvablePath)
             else
               value.is_a?(UnresolvablePath)
             end
