@@ -14,10 +14,6 @@ module NxtTry
     # TODO: Do some memoization here?
 
     def call(path:)
-      # This is currently the path within the node and does not respect relative paths!
-      # Probably it's not smart to have the node in the instance or we need a class level methods to use
-      # the correct node accessor based on the path
-
       path = parse_path(path)
 
       if path.first.to_s == '~'
@@ -115,7 +111,8 @@ module NxtTry
                                 matches = string.scan(parent_pattern)
                                 string = string.gsub(parent_pattern, '')
                                 string = string.prepend('/')
-                                current_path[0..-matches.size+1]
+                                position = -1*(matches.size+1)
+                                current_path[0..position]
                               else
                                 # absolute paths
                                 []
