@@ -20,7 +20,7 @@ RSpec.describe NxtTry::Evaluator do
                 name: { type: 'string' },
                 number: { type: 'string' },
               },
-              if: { '../street/name': { equals: 'Goethe Street' } },
+              if: { '../../address/street/name': { equals: 'Goethe Street' } },
               then: { merge: { attributes: { number: { type: 'integer', validations: { equals: 2 } } } } }
             },
             zip_code: { type: 'string' },

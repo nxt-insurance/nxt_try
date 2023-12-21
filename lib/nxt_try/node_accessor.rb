@@ -14,6 +14,10 @@ module NxtTry
     # TODO: Do some memoization here?
 
     def call(path:)
+      # This is currently the path within the node and does not respect relative paths!
+      # Probably it's not smart to have the node in the instance or we need a class level methods to use
+      # the correct node accessor based on the path
+
       path = parse_path(path)
 
       if path.first.to_s == '~'
