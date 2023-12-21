@@ -18,12 +18,19 @@ RSpec.describe 'types' do
     examples.each_with_index do |example, index|
       schema = File.read(example.fetch('schema'))
       input = File.read(example.fetch('input'))
-      expectation = File.read(example.fetch('expect'))
 
-      puts "testing example #{index}"
+      checks = (example.keys - %w[input schema])
 
-      result = NxtTry::Evaluator.new(schema: schema, input: input).call
-      expect(result.to_h).to eq(JSON.parse(expectation, symbolize_names: true))
+      checks.each do |check|
+        expectation_schema = File.read(example.fetch(check))
+
+        puts "testing example #{index}"
+
+        result = NxtTry::Evaluator.new(schema: schema, input: input).call
+        expectation = JSON.parse(expectation_schema, symbolize_names: true)
+        expect(result.to_h).to send(check, expectation)
+      end
+
     end
   end
 end
