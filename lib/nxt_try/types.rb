@@ -3,7 +3,7 @@ module NxtTry
     include Dry.Types()
 
     PRIMITIVES = %w[string string! integer boolean date_time date time null]
-    HASHES = %w[hash hash! object]
+    HASHES = %w[hash hash! object object!]
     ARRAYS = %w[array array!]
     ALL = PRIMITIVES + HASHES + ARRAYS
 

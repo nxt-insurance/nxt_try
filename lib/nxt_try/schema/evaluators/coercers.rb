@@ -8,6 +8,7 @@ module NxtTry
           register(:hash, NxtTry::Types::Strict::Hash)
           register(:object, NxtTry::Types::Strict::Hash)
           register(:hash!, NxtTry::Types::LengthyHash)
+          register(:object!, NxtTry::Types::Strict::Hash)
           register(:array, NxtTry::Types::Strict::Array)
           register(:array!, NxtTry::Types::LengthyArray)
           register(:string, NxtTry::Types::Strict::String)
