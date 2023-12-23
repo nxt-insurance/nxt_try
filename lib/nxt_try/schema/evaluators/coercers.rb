@@ -14,6 +14,7 @@ module NxtTry
           register(:string, NxtTry::Types::Strict::String)
           register(:string!, NxtTry::Types::LengthyString)
           register(:integer, NxtTry::Types::Strict::Integer)
+          register(:decimal, NxtTry::Types::Strict::Decimal)
           register(:boolean, NxtTry::Types::Strict::Bool)
           register(:date_time, Types::JSON::DateTime)
           register(:time, Types::JSON::Time)
