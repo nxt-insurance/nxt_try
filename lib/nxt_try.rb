@@ -2,11 +2,13 @@
 
 require 'active_support/all'
 require 'dry-types'
+require 'dry-container'
 require 'nxt_registry'
 
 require_relative "nxt_try/version"
 require_relative "nxt_try/error"
 require_relative "nxt_try/config"
+require_relative "nxt_try/type_registry"
 require_relative "nxt_try/types"
 require_relative "nxt_try/type_definitions"
 require_relative "nxt_try/path_identifier"

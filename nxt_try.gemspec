@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   # spec.add_dependency "example-gem", "~> 1.0"
 
   spec.add_dependency "dry-types"
+  spec.add_dependency "dry-container"
   spec.add_dependency "activesupport"
   spec.add_dependency "nxt_registry"
   spec.add_development_dependency "rspec"

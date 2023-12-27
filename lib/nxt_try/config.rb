@@ -9,8 +9,12 @@ module NxtTry
 
     attr_reader :schema, :input, :original_schema, :options
 
-    def type_definitions
-      @type_definitions ||= schema.dig(:definitions, :types) || {}
+    def defined_types
+      @defined_types ||= options.fetch(:defined_types, nil)
+    end
+
+    def defined_types?
+      defined_types.present?
     end
 
     def additional_keys_strategy

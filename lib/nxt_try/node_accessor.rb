@@ -67,7 +67,7 @@ module NxtTry
     private
 
     def resolve_schemas_for_path(schema:, current_path:)
-      schema = resolve_defined_type(schema)
+      schema = schema_or_defined_schema(schema)
       type = schema.fetch(:type)
       type = resolve_type_expression(type)
 

@@ -2,7 +2,8 @@ module NxtTry
   module TypeDefinitions
     IDENTIFIER_PATTERN = /\A#/
 
-    def resolve_defined_type(schema)
+    # Naming is not good since we mix schemas and types
+    def schema_or_defined_schema(schema)
       if defined_type?(schema)
         defined_type(schema)
       else
@@ -12,7 +13,8 @@ module NxtTry
 
     def defined_type(schema)
       key = schema.fetch(:type).gsub(IDENTIFIER_PATTERN, '')
-      config.type_definitions.fetch(key.to_sym).dup # make a copy of the template!
+      template_schema = NxtTry::TypeRegistry.resolve(key)
+      template_schema.dup # make a copy of the template
     end
 
     def defined_type?(schema)

@@ -3,6 +3,7 @@ PATH
   specs:
     nxt_try (0.1.0)
       activesupport
+      dry-container
       dry-types
       nxt_registry
 
@@ -27,6 +28,8 @@ GEM
     diff-lcs (1.5.0)
     drb (2.1.1)
       ruby2_keywords
+    dry-container (0.11.0)
+      concurrent-ruby (~> 1.0)
     dry-core (1.0.1)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)

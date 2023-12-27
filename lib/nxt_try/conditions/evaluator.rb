@@ -7,7 +7,7 @@ module NxtTry
         @input = input
         @current_path = current_path
         @config = config
-        @schema = resolve_defined_type(schema)
+        @schema = schema_or_defined_schema(schema)
         @parent_node = parent_node
       end
 
