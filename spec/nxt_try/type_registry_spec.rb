@@ -46,11 +46,11 @@ RSpec.describe NxtTry do
       }
     end
 
-    before { NxtTry.load_types(types) }
+    subject { NxtTry.build_type_registry(types) }
 
     it 'registers the types' do
-      expect(NxtTry::TypeRegistry.keys).to eq(%w[user.address user.email environment.production.host environment.staging.host])
-      expect(NxtTry::TypeRegistry.resolve('environment.staging.host')).to eq({:type=>"string", :validations=>".*staging.*"})
+      expect(subject.keys).to eq(%w[user.address user.email environment.production.host environment.staging.host])
+      expect(subject.resolve('environment.staging.host')).to eq({:type=>"string", :validations=>".*staging.*"})
     end
   end
 end

@@ -8,7 +8,6 @@ require 'nxt_registry'
 require_relative "nxt_try/version"
 require_relative "nxt_try/error"
 require_relative "nxt_try/config"
-require_relative "nxt_try/type_registry"
 require_relative "nxt_try/types"
 require_relative "nxt_try/type_definitions"
 require_relative "nxt_try/path_identifier"
@@ -73,3 +72,25 @@ require_relative "nxt_try/schema/validators/integer/pattern"
 
 require_relative "nxt_try/schema/validators/array/length"
 require_relative "nxt_try/schema/validators/hash/length"
+
+module NxtTry
+  module_function def build_type_registry(types)
+    container = Dry::Container.new
+    register_types(types, container)
+    container
+  end
+
+  module_function def register_types(types, container, namespace = [])
+    types.symbolize_keys.each do |(key, value)|
+      type = value.fetch(:type).to_s
+      current_namespace = namespace + [key]
+
+      if type == 'namespace'
+        register_types(value.symbolize_keys.fetch(:definitions), container, current_namespace)
+      else
+        container.register(current_namespace.join('.'), value)
+      end
+    end
+  end
+end
+

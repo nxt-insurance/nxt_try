@@ -13,7 +13,7 @@ module NxtTry
 
     def defined_type(schema)
       key = schema.fetch(:type).gsub(IDENTIFIER_PATTERN, '')
-      template_schema = NxtTry::TypeRegistry.resolve(key)
+      template_schema = config.defined_types.resolve(key)
       template_schema.dup # make a copy of the template
     end
 
