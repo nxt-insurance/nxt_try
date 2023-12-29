@@ -1,24 +1,25 @@
 RSpec.describe NxtTry::Evaluator do
 
-  let(:schema) do
+  let(:types) do
     {
-      definitions: {
-        types: {
-          address: {
-            type: 'hash',
-            attributes: {
-              street: { type: 'string' },
-              street_number: { type: 'string' },
-              city: { type: 'string' },
-              zip_code: { type: 'string' }
-            }
-          },
-          zip_code: {
-            type: 'string',
-            validations: { pattern: '\d{5}' }
-          }
+      address: {
+        type: 'hash',
+        attributes: {
+          street: { type: 'string' },
+          street_number: { type: 'string' },
+          city: { type: 'string' },
+          zip_code: { type: 'string' }
         }
       },
+      zip_code: {
+        type: 'string',
+        validations: { pattern: '\d{5}' }
+      }
+    }
+  end
+
+  let(:schema) do
+    {
       type: 'hash',
       attributes: {
         address: { type: '#address' },
@@ -41,10 +42,12 @@ RSpec.describe NxtTry::Evaluator do
     }
   end
 
-  subject { described_class.new(schema: schema, input: input, options: options).call }
+  let(:type_registry) { NxtTry.build_type_registry(types) }
+
+  subject { described_class.new(schema: schema, options: options).call(input) }
 
   context 'reject additional keys ' do
-    let(:options) { { additional_keys_strategy: 'reject' } }
+    let(:options) { { additional_keys_strategy: 'reject', defined_types: type_registry } }
 
     it do
       expect(subject).to be_valid
@@ -55,7 +58,7 @@ RSpec.describe NxtTry::Evaluator do
   end
 
   context 'allow additional keys ' do
-    let(:options) { { additional_keys_strategy: 'allow' } }
+    let(:options) { { additional_keys_strategy: 'allow', defined_types: type_registry } }
 
     it do
       expect(subject).to be_valid
@@ -66,7 +69,7 @@ RSpec.describe NxtTry::Evaluator do
   end
 
   context 'restrict additional keys ' do
-    let(:options) { { additional_keys_strategy: 'restrict' } }
+    let(:options) { { additional_keys_strategy: 'restrict', defined_types: type_registry } }
 
     it do
       expect(subject).to_not be_valid
