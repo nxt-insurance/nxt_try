@@ -40,7 +40,7 @@ RSpec.describe NxtTry::Evaluator do
     }
   end
 
-  subject { described_class.new(schema: schema, input: input, options: options).call }
+  subject { described_class.new(schema: schema, options: options).call(input) }
 
   context 'flags missing required keys' do
     let(:options) { { additional_keys_strategy: 'reject' } }

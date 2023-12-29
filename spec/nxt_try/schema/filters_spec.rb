@@ -14,7 +14,7 @@ RSpec.describe NxtTry::Evaluator do
     }
   end
 
-  subject { described_class.new(schema: schema, input: input, options: { filters: 'pricing' }).call }
+  subject { described_class.new(schema: schema, options: { filters: 'pricing' }).call(input) }
 
   let(:input) { { deductible: 10000 } }
 

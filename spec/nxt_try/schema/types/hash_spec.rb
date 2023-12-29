@@ -1,6 +1,6 @@
 RSpec.describe NxtTry::Evaluator do
 
-  subject { described_class.new(schema: schema.to_json, input: input.to_json).call }
+  subject { described_class.new(schema: schema.to_json).call(input.to_json) }
 
   context 'hash with arbitrary attributes' do
     let(:schema) do

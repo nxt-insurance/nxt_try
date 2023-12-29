@@ -1,6 +1,6 @@
 RSpec.describe NxtTry::Evaluator do
 
-  subject { described_class.new(schema: schema.to_json, input: input.to_json).call }
+  subject { described_class.new(schema: schema.to_json).call(input.to_json) }
 
   context 'any_of primitives' do
     let(:schema) do
@@ -34,30 +34,33 @@ RSpec.describe NxtTry::Evaluator do
   end
 
   context 'more complex any_of' do
-    let(:schema) do
+    let(:types) do
       {
-        definitions: {
-          types: {
-            bike: {
-              type: 'hash',
-              attributes: {
-                color: { type: 'string' }
-              }
-            },
-            car: {
-              type: 'hash',
-              attributes: {
-                horse_power: { type: 'integer' }
-              }
-            },
-            device: {
-              type: 'hash',
-              attributes: {
-                expensive: { type: 'boolean' }
-              }
-            }
+        bike: {
+          type: 'hash',
+          attributes: {
+            color: { type: 'string' }
           }
         },
+        car: {
+          type: 'hash',
+          attributes: {
+            horse_power: { type: 'integer' }
+          }
+        },
+        device: {
+          type: 'hash',
+          attributes: {
+            expensive: { type: 'boolean' }
+          }
+        }
+      }
+    end
+
+    let(:type_registry) { NxtTry.build_type_registry(types) }
+
+    let(:schema) do
+      {
         type: 'hash',
         attributes: {
           valuable: {
@@ -95,7 +98,7 @@ RSpec.describe NxtTry::Evaluator do
 
     it do
       inputs.each do |input|
-        result = described_class.new(schema: schema, input: input).call
+        result = NxtTry.evaluator(options: { defined_types: type_registry }).call(schema).call(input)
         expect(result).to be_valid
         expect(result.output).to eq(input)
       end

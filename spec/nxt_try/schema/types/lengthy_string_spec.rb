@@ -1,6 +1,6 @@
 RSpec.describe NxtTry::Evaluator do
 
-  subject { described_class.new(schema: schema, input: input).call }
+  subject { described_class.new(schema: schema).call(input) }
 
   context 'lengthy string' do
     let(:schema) do
