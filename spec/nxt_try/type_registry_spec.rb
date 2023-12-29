@@ -1,5 +1,5 @@
 RSpec.describe NxtTry do
-  describe '.load_types' do
+  describe '.build_type_registry' do
     let(:types) do
       {
         user: {

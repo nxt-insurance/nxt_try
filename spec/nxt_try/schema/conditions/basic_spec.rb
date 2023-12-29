@@ -8,7 +8,7 @@ RSpec.describe NxtTry::Conditions::Evaluator do
     ).call
   end
 
-  let(:config) { NxtTry::Config.new(schema: schema, input: input, options: {}) }
+  let(:config) { NxtTry::Config.new(schema: schema, options: {}) }
 
   context 'hash root' do
     let(:schema) do

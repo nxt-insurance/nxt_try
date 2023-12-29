@@ -1,13 +1,12 @@
 module NxtTry
   class Config
-    def initialize(schema:, input:, options:)
+    def initialize(schema:, options:)
       @schema = schema
       @original_schema = schema.deep_dup
-      @input = input
       @options = build_options(options)
     end
 
-    attr_reader :schema, :input, :original_schema, :options
+    attr_reader :schema, :original_schema, :options
 
     def defined_types
       @defined_types ||= options.fetch(:defined_types, nil)
@@ -35,7 +34,7 @@ module NxtTry
 
     # TODO: What's this for?
     def clone_with_options(opts)
-      self.class.new(schema: schema, input: input, options: options.merge(opts))
+      self.class.new(schema: schema, options: options.merge(opts))
     end
 
     private

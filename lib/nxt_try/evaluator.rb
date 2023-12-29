@@ -1,21 +1,21 @@
 module NxtTry
   class Evaluator
-    def initialize(schema:, input:, current_path: [], options: {})
+    def initialize(schema:, current_path: [], options: {})
       @schema = parse_json(schema)
-      @input = parse_json(input)
       @current_path = current_path
       @config = build_config(options)
     end
 
-    attr_reader :schema, :input, :current_path, :node_accessor, :config
+    attr_reader :schema, :current_path, :node_accessor, :config
 
-    def call
-      schema_to_eval = evaluate_conditions
-      evaluation = evaluate_schema(schema_to_eval)
+    def call(input)
+      input = parse_json(input)
+      schema_to_eval = evaluate_conditions(input)
+      evaluation = evaluate_schema(schema_to_eval, input)
       evaluation.result
     end
 
-    def evaluate_conditions
+    def evaluate_conditions(input)
       Conditions::Evaluator.new(
         schema: schema,
         input: input,
@@ -24,7 +24,7 @@ module NxtTry
       ).call
     end
 
-    def evaluate_schema(schema_to_eval)
+    def evaluate_schema(schema_to_eval, input)
       Schema::Evaluator.new(
         config: config,
         schema: schema_to_eval,
@@ -41,7 +41,7 @@ module NxtTry
     end
 
     def build_config(options)
-      Config.new(schema: schema, input: input, options: options)
+      Config.new(schema: schema, options: options)
     end
   end
 end

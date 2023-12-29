@@ -48,7 +48,7 @@ module NxtTry
 
       schemas.each do |schema|
         eval = NxtTry::Schema::Evaluator.new(
-          config: config.clone_with_options({ validate: false }),
+          config: config.clone_with_options(validate: false),
           schema: schema,
           input: value,
           current_path: []
