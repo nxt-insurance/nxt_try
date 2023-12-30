@@ -13,7 +13,6 @@ module NxtTry
             ).call
           end
 
-
           match = evaluators.find(&:valid?)
 
           if match
@@ -24,6 +23,8 @@ module NxtTry
             evaluators.each do |evaluator|
               evaluator.result.errors.each { |_, error| result.add_error(error, current_path) }
             end
+            # When nothing matches we set the result to the first output which should be the input
+            result.output = evaluators.first.result.output
           end
 
           self
@@ -32,7 +33,14 @@ module NxtTry
         private
 
         def schemas
-          schema.fetch(:type).fetch(:any_of)
+          schemas = schema.fetch(:type).fetch(:any_of)
+          return schemas unless config.filters.any?
+
+          filtered_schemas = schemas.select { |schema| (Array(schema.fetch(:filters, [])) & config.filters).any? }
+          return filtered_schemas if filtered_schemas.any?
+
+          # We cannot have no schemas for an any_of node as we would not know how to coerce
+          raise ArgumentError, "Applying the filters: #{config.filters} for #{current_path} resulted in empty any of node"
         end
       end
     end

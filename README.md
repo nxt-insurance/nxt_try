@@ -8,7 +8,7 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
   - Should we allow expressions as filters? 
 
 - Types
-  - any of, all of
+  - any of, all of, one_of maybe n_of?
   - references by id
   - definitions
 - Nodes
