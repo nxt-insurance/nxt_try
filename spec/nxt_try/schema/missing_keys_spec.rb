@@ -1,28 +1,31 @@
 RSpec.describe NxtTry::Evaluator do
 
+  let(:types) do
+    {
+      address: {
+        type: 'hash',
+        attributes: {
+          street: { type: 'string' },
+          street_number: { type: 'string' },
+          city: {
+            type: 'string',
+            required: {
+              and: [
+                { '/address/street': { traceable: true } },
+                { '/address/street_number': { traceable: true } }
+              ]
+            } # when street is present we require city to be present
+          },
+          zip_code: { type: 'string' }
+        }
+      }
+    }
+  end
+
+  let(:type_registry) { NxtTry.build_type_registry(types) }
+
   let(:schema) do
     {
-      definitions: {
-        types: {
-          address: {
-            type: 'hash',
-            attributes: {
-              street: { type: 'string' },
-              street_number: { type: 'string' },
-              city: {
-                type: 'string',
-                required: {
-                  and: [
-                    { '/address/street': { traceable: true } },
-                    { '/address/street_number': { traceable: true } }
-                  ]
-                } # when street is present we require city to be present
-              },
-              zip_code: { type: 'string' }
-            }
-          }
-        }
-      },
       type: 'hash',
       attributes: {
         address: { type: '#address' },
@@ -43,7 +46,7 @@ RSpec.describe NxtTry::Evaluator do
   subject { described_class.new(schema: schema, options: options).call(input) }
 
   context 'flags missing required keys' do
-    let(:options) { { additional_keys_strategy: 'reject' } }
+    let(:options) { { additional_keys_strategy: 'reject', defined_types: type_registry } }
 
     it do
       expect(subject).to_not be_valid

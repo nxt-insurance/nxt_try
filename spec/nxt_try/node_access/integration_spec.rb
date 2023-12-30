@@ -49,7 +49,7 @@ RSpec.describe NxtTry::Evaluator do
     }
   end
 
-  subject { described_class.new(schema: schema, input: input).call }
+  subject { described_class.new(schema: schema).call(input) }
 
   it do
     expect(subject).to_not be_valid

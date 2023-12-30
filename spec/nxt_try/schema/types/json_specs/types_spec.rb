@@ -26,7 +26,7 @@ RSpec.describe 'types' do
 
         puts "testing example #{index}"
 
-        result = NxtTry::Evaluator.new(schema: schema, input: input).call
+        result = NxtTry::Evaluator.new(schema: schema).call(input)
         expectation = JSON.parse(expectation_schema, symbolize_names: true)
         expect(result.to_h).to send(check, expectation)
       end

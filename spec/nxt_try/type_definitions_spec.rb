@@ -1,25 +1,28 @@
 RSpec.describe NxtTry::Evaluator do
 
   context 'hash root' do
+    let(:types) do
+      {
+        zip_code: {
+          type: 'string',
+          pattern: '\d{5}'
+        },
+        address: {
+          type: 'hash',
+          attributes: {
+            street: { type: 'string' },
+            street_number: { type: 'string' },
+            city: { type: 'string' },
+            zip_code: { type: '#zip_code' }
+          }
+        }
+      }
+    end
+
+    let(:type_registry) { NxtTry.build_type_registry(types) }
+
     let(:schema) do
       {
-        definitions: {
-          types: {
-            zip_code: {
-              type: 'string',
-              pattern: '\d{5}'
-            },
-            address: {
-              type: 'hash',
-              attributes: {
-                street: { type: 'string' },
-                street_number: { type: 'string' },
-                city: { type: 'string' },
-                zip_code: { type: '#zip_code' }
-              }
-            },
-          },
-        },
         type: 'hash',
         attributes: {
           address: { type: '#address' },
@@ -41,7 +44,7 @@ RSpec.describe NxtTry::Evaluator do
     end
 
     it 'builds the schema' do
-      result = described_class.new(schema: schema, input: input).call
+      result = described_class.new(schema: schema, options: { defined_types: type_registry }).call(input)
       expect(result.to_h).to eq(
                                {:errors=>{},
                                 :output=>

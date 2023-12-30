@@ -37,7 +37,7 @@ RSpec.describe NxtTry::Evaluator do
 
       it do
         expect(subject).to_not be_valid
-        expect(subject.errors).to eq("root"=>["Length of {} does not match 2"])
+        expect(subject.errors).to eq("root"=>[{:message=>"Value {} does not match length 2", :reference=>2, :validator=>"length", :value=>{}}])
       end
     end
   end

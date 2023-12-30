@@ -73,7 +73,17 @@ RSpec.describe NxtTry::Evaluator do
 
     it do
       expect(subject).to_not be_valid
-      expect(subject.errors).to eq({"address"=>["contains additional keys: [:apartment, :district]"]})
+      expect(subject.errors).to eq(
+        {
+          "address"=>[
+            {
+              :message=>"address contains additional keys [:apartment, :district]",
+              :reference=>[:street, :street_number, :city, :zip_code], :validator=>"keys",
+              :value=>{:address=>{:apartment=>"5", :city=>"Augsburg", :district=>"5", :street=>"Kirchgasse", :street_number=>"1", :zip_code=>"67661"}, :country=>"Germany"}
+            }
+          ]
+        }
+      )
       expect(subject.output).to eq(
         :address=>{:city=>"Augsburg", :street=>"Kirchgasse", :street_number=>"1", :zip_code=>"67661", :apartment=>"5", :district=>"5"}, :country=>"Germany"
       )
