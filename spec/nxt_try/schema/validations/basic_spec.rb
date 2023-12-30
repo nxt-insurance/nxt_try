@@ -42,7 +42,13 @@ RSpec.describe NxtTry::Evaluator do
             validations: {
               or: [
                 { size: 6 },
-                { equals: '12345' }
+                { equals: '123456' },
+                {
+                  and: [
+                    { size: 5 },
+                    { equals: '12345' }
+                  ]
+                }
               ]
             }
           }

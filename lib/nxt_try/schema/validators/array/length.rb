@@ -2,7 +2,7 @@ module NxtTry
   module Schema
     module Validators
       module Array
-        class Length
+        class Length < Base
           def initialize(value, *args)
             @length = Integer(args.first)
             @value = value
@@ -24,6 +24,8 @@ module NxtTry
                   validator: self.class.name.demodulize.downcase,
                   message: "Value #{value} does not match length #{length}"
                 }
+              else
+                success
               end
             end
           end

@@ -2,14 +2,14 @@ module NxtTry
   module Schema
     module Validators
       module String
-        class Enum
+        class Enum < Base
           def initialize(value, *args)
             @allowed = Array(args.first)
             @value = value
           end
 
           def call
-            return if allowed.include?(value)
+            return success if allowed.include?(value)
 
             {
               value: value,

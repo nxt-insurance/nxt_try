@@ -102,9 +102,7 @@ module NxtTry
             config: config
           ).call
 
-          validation_errors = validation_errors.compact
           validation_errors.each { |error| result.add_error(error) }
-
           validation_errors.any?
         end
 

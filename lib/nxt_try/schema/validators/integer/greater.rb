@@ -2,14 +2,14 @@ module NxtTry
   module Schema
     module Validators
       module Integer
-        class Greater
+        class Greater < Base
           def initialize(value, *args)
             @allowed = args.first
             @value = value
           end
 
           def call
-            return if value > allowed
+            return success if value > allowed
           rescue
 
             {

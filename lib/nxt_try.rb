@@ -55,6 +55,8 @@ require_relative "nxt_try/schema/required/logic/base"
 require_relative "nxt_try/schema/required/logic/and"
 
 require_relative "nxt_try/schema/validator"
+require_relative "nxt_try/schema/validators/success"
+require_relative "nxt_try/schema/validators/base"
 require_relative "nxt_try/schema/validators/registry"
 require_relative "nxt_try/schema/validators/expression"
 

@@ -2,14 +2,14 @@ module NxtTry
   module Schema
     module Validators
       module Integer
-        class Pattern
+        class Pattern < Base
           def initialize(value, *args)
             @pattern = parse_pattern(args.first)
             @value = value
           end
 
           def call
-            return if value.to_s.match(pattern)
+            return success if value.to_s.match(pattern)
 
             {
               value: value,

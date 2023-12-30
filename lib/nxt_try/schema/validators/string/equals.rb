@@ -2,14 +2,14 @@ module NxtTry
   module Schema
     module Validators
       module String
-        class Equals
+        class Equals < Base
           def initialize(value, *args)
             @allowed = args.first
             @value = value
           end
 
           def call
-            return if allowed == value
+            return success if allowed == value
 
             {
               value: value,

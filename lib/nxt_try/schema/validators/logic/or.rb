@@ -5,15 +5,18 @@ module NxtTry
         class Or < Base
           def call
             # left | or: [{ expr }, { expr }] | right
-            right.inject(false) do |acc, expr|
-              acc || Validator.new(
+            right.inject([]) do |acc, expr|
+              errors = Validator.new(
                 expression: expr,
                 node_accessor: node_accessor,
                 node_type: node_type,
                 input: input,
-                errors: errors,
                 config: config
               ).call
+
+              return [] if errors.empty?
+
+              acc + errors
             end
           end
         end

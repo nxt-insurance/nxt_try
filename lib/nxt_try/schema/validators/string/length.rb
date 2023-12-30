@@ -2,7 +2,7 @@ module NxtTry
   module Schema
     module Validators
       module String
-        class Length
+        class Length < Base
           def initialize(value, *args)
             @length = Integer(args.first)
             @value = value
@@ -24,6 +24,8 @@ module NxtTry
                   reference: length,
                   message: "Value #{value} is not of length #{length}"
                 }
+              else
+                return success
               end
             end
           end
