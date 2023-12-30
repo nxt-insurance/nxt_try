@@ -2,7 +2,10 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/nxt_try`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-- Implement validator results
+- How should filters actually work? 
+  - Currently it only works for hashes?!
+  - Maybe any_of, all_of should be implemented as well? 
+  - Should we allow expressions as filters? 
 
 - Types
   - any of, all of
