@@ -9,12 +9,6 @@ module NxtTry
 
           self
         end
-
-        private
-
-        def attributes
-          schema.fetch(:attributes)
-        end
       end
     end
   end

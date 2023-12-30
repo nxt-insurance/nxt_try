@@ -11,6 +11,7 @@ module NxtTry
             @node_type = node_type
             @input = input
             @errors = errors
+            @config = config
           end
 
           def call

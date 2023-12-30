@@ -40,8 +40,8 @@ RSpec.describe NxtTry::Evaluator do
           size: {
             type: 'string',
             validations: {
-              and: [
-                { size: 5 },
+              or: [
+                { size: 6 },
                 { equals: '12345' }
               ]
             }

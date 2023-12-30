@@ -61,6 +61,7 @@ require_relative "nxt_try/schema/validators/expression"
 require_relative "nxt_try/schema/validators/logic/registry"
 require_relative "nxt_try/schema/validators/logic/base"
 require_relative "nxt_try/schema/validators/logic/and"
+require_relative "nxt_try/schema/validators/logic/or"
 
 require_relative "nxt_try/schema/validators/string/length"
 require_relative "nxt_try/schema/validators/string/equals"
