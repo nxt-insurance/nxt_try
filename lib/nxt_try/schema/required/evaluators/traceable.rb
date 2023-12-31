@@ -10,8 +10,9 @@ module NxtTry
 
           def call
             # TODO: Make sure presence expectation is boolean value
+            # TODO: This does not work with boolean values! What does traceable mean?
             if presence_expectation
-              value && !value.is_a?(UnresolvablePath)
+              !value.is_a?(UnresolvablePath)
             else
               value.is_a?(UnresolvablePath)
             end
