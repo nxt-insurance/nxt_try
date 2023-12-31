@@ -30,7 +30,14 @@ module NxtTry
         private
 
         def schemas
-          schema.fetch(:type).fetch(:all_of)
+          schemas = schema.fetch(:type).fetch(:all_of)
+          return schemas unless config.filters.any?
+
+          filtered_schemas = schemas.select { |schema| (Array(schema.fetch(:filters, [])) & config.filters).any? }
+          return filtered_schemas if filtered_schemas.any?
+
+          # We cannot have no schemas for an any_of node as we would not know how to coerce
+          raise ArgumentError, "Applying the filters: #{config.filters} for #{current_path} resulted in empty all of node"
         end
       end
     end

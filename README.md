@@ -2,11 +2,6 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/nxt_try`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-- How should filters actually work? 
-  - Currently it only works for hashes?!
-  - Maybe any_of, all_of should be implemented as well? 
-  - Should we allow expressions as filters? 
-
 - Types
   - any of, all of, one_of maybe n_of?
   - references by id
@@ -51,6 +46,7 @@ Welcome to your new gem! In this directory, you'll find the files you need to be
   ```
   - NO conditions in validations as those are on schema level
 - Filters
+  - Work with hashes, all_of and any_of nodes
 - Proper type systems with namespacing
 - Required nodes, omittable nodes 
 - Should we allow conditions on all nodes or just hashes?
