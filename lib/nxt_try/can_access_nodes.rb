@@ -6,5 +6,15 @@ module NxtTry
 
       node_accessor.call(path: path)
     end
+
+    def evaluate_path(path)
+      path = PathIdentifier.new(path).call
+
+      if path.present?
+        node_accessor.call(path: path)
+      else
+        raise ArgumentError, "'#{path}' does not seem to be a path"
+      end
+    end
   end
 end

@@ -14,18 +14,13 @@ module NxtTry
         attr_reader :expression, :input, :node_accessor, :config
 
         def call
-          if expression.logic?
+          if expression.logic? || expression.required?
             expression.evaluator.new(
               config: config,
               expression: expression.raw,
               node_accessor: node_accessor,
               input: input
             ).call
-          elsif expression.required?
-            left = evaluate_path_or_value(expression.left)
-            right = evaluate_path_or_value(expression.right.values.first)
-
-            expression.evaluator.new(left, right).call
           else
             raise ArgumentError, "Could not resolve type of expression: #{expression}"
           end

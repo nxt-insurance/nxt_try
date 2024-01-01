@@ -61,24 +61,24 @@ module NxtTry
         private
 
         def missing_optional_node?(key, sub_schema)
-          missing_key?(key) && !required_node?(sub_schema)
+          missing_key?(key) && !required_node?(key, sub_schema)
         end
 
         def missing_required_node?(key, sub_schema)
-          missing_key?(key) && required_node?(sub_schema)
+          missing_key?(key) && required_node?(key, sub_schema)
         end
 
-        def required_node?(sub_schema)
-          @required_node ||= begin
-                               required = sub_schema.fetch(:required, true)
+        def required_node?(key, sub_schema)
+          @required_node ||= {}
+          @required_node[key] ||= begin
+                                    required = sub_schema.fetch(:required, true)
 
-                               if required.is_a?(::Hash)
-                                 # TODO: Here we also want to allow expressions?
-                                 evaluate_expression(required)
-                               else
-                                 required
-                               end
-                             end
+                                    if required.is_a?(::Hash)
+                                      evaluate_expression(required)
+                                    else
+                                      required
+                                    end
+                                  end
         end
 
         def handle_additional_keys(current_node)
